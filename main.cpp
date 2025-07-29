@@ -1,35 +1,68 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-int main() {
-    int mark1, mark2, mark3;
-    float average;
+// Base class: Person
+class Person {
+protected:
+    string name;
 
- 
-    cout << "Enter marks for 3 subjects:" << endl;
-    cout << "Subject 1: ";
-    cin >> mark1;
-    cout << "Subject 2: ";
-    cin >> mark2;
-    cout << "Subject 3: ";
-    cin >> mark3;
-
-    average = (mark1 + mark2 + mark3) / 3.0;
-
-
-    cout << "\nAverage Marks: " << average << endl;
-
-    if (average >= 70 && average <= 100) {
-        cout << "Grade: A" << endl;
-    } else if (average >= 60) {
-        cout << "Grade: B" << endl;
-    } else if (average >= 50) {
-        cout << "Grade: C" << endl;
-    } else if (average >= 40) {
-        cout << "Grade: D" << endl;
-    } else {
-        cout << "Grade: E (Fail)" << endl;
+public:
+    void setName(string n) {
+        name = n;
     }
+
+    string getName() const {
+        return name;
+    }
+};
+
+// Derived class: LibraryMember
+class LibraryMember : public Person {
+private:
+    int memberID;
+    int booksBorrowed;
+
+public:
+    // Constructor
+    LibraryMember(string n, int id, int books) {
+        setName(n);  // Call base class method
+        memberID = id;
+        booksBorrowed = books;
+    }
+
+    int getMemberID() const {
+        return memberID;
+    }
+
+    int getBooksBorrowed() const {
+        return booksBorrowed;
+    }
+};
+
+// Derived class: PremiumMember
+class PremiumMember : public LibraryMember {
+private:
+    double membershipFee;
+
+public:
+    // Constructor
+    PremiumMember(string n, int id, int books, double fee)
+        : LibraryMember(n, id, books), membershipFee(fee) {}
+
+    double getMembershipFee() const {
+        return membershipFee;
+    }
+};
+
+// Main function to test the system
+int main() {
+    PremiumMember member("rosemary", 657, 7, 2500.00);
+
+    cout << "Name: " << member.getName() << endl;
+    cout << "Member ID: " << member.getMemberID() << endl;
+    cout << "Books Borrowed: " << member.getBooksBorrowed() << endl;
+    cout << "Membership Fee: $" << member.getMembershipFee() << endl;
 
     return 0;
 }
